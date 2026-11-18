@@ -2,8 +2,9 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <link rel="manifest" href="manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>nToolz v3.0</title>
+  <title>nToolz v3.1</title>
   <style>
     :root, [data-theme="light"] {
       --bg-canvas: #ffffff;
@@ -274,6 +275,7 @@
 <body>
   <header class="gh-header">
     <div class="gh-brand">
+      <img src="app.svg" style="width: 50px;height: 50px;">
       <span class="animate-charcter">nToolz<span style="font-size: 30px;"> v3.0</span></span>
     </div>
     <button id="theme-toggle" class="theme-btn" title="Toggle theme" aria-label="Toggle theme">🌙</button>
@@ -320,7 +322,7 @@
         text: "Mindmap",
         url: "https://ntoolz.github.io/mindmap",
         description: "Create mindmap to cahin your nurons",
-        group: "Design"
+        group: "Productivity"
       },
       {
         text: "Mermaid Js",
@@ -339,7 +341,44 @@
         url: "https://ntoolz.github.io/pomodoro",
         description: "Decide on the task to be done by time",
         group: "Productivity"
+      },
+      {
+        text: "FreeDraw",
+        url: "https://ntoolz.github.io/freedraw/",
+        description: "Draw anything on canvas",
+        group: "Tool"
+      },
+      {
+        text: "Mutual Fund Calculator",
+        url: "https://ntoolz.github.io/mfcalc/",
+        description: "Calculate funds returns with NAV",
+        group: "Finance"
+      },
+      {
+        text: "50 30 20 Budget",
+        url: "https://ntoolz.github.io/503020",
+        description: "503020 financial planning",
+        group: "Finance"
+      },
+      {
+        text:"VectorForge",
+        url:"https://ntoolz.github.io/VectorForge",
+        description: "Paste & Convert Images to SVG",
+        group: "Graphics"
+      },
+      {
+        text:"Tkinter Gui Designer",
+        url:"https://ntoolz.github.io/TkinterGui",
+        description: "WYSIWYG Gui designer for Tkinter with option tot export python code",
+        group: "Graphics"
+      },
+      {
+        text:"MagicDraw",
+        url:"https://ntoolz.github.io/MagicDraw",
+        description: "Storyboarding and mindmap tool",
+        group: "Graphics"
       }
+
     ];
 
     const htmlEl = document.documentElement;
