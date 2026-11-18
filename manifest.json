@@ -1,0 +1,19 @@
+{
+    "name": "nToolz",
+    "short_name": "ntoolz",
+    "description": "Web tools by killercodes",
+    "id": "/",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#080808",
+    "theme_color": "#080808",
+    "orientation": "portrait-primary",   
+    "icons": [
+      {
+        "src": "app.svg",
+        "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+        "type": "image/svg+xml",
+        "purpose": "any"
+      }
+    ]
+}
