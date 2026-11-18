@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nToolz v3.0</title>
+  <style>
+    :root, [data-theme="light"] {
+      --bg-canvas: #ffffff;
+      --bg-subtle: #f6f8fa;
+      --bg-header: #f6f8fa;
+      --border-default: #d0d7de;
+      --border-muted: #d8dee4;
+      --fg-default: #1f2328;
+      --fg-muted: #656d76;
+      --accent-fg: #0969da;
+      --row-hover: #f6f8fa;
+      --input-bg: #ffffff;
+      --focus-ring: rgba(9, 105, 218, 0.3);
+    }
+
+    [data-theme="dark"] {
+      --bg-canvas: #0d1117;
+      --bg-subtle: #161b22;
+      --bg-header: #010409;
+      --border-default: #30363d;
+      --border-muted: #21262d;
+      --fg-default: #e6edf3;
+      --fg-muted: #848d97;
+      --accent-fg: #2f81f7;
+      --row-hover: #161b22;
+      --input-bg: #0d1117;
+      --focus-ring: rgba(47, 129, 247, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--fg-default);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* GitHub-style Top Header */
+    .gh-header {
+      
+      border-bottom: 1px solid var(--border-default);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width:50%;
+      margin: 0 auto;
+    }
+
+    .gh-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--fg-default);
+    }
+
+    .gh-brand svg {
+      fill: var(--fg-default);
+      flex-shrink: 0;
+    }
+
+    .theme-btn {
+      background: transparent;
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .theme-btn:hover {
+      background-color: var(--bg-subtle);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1012px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 220px;
+      padding: 6px 12px;
+      font-size: 14px;
+      color: var(--fg-default);
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-fg);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    .group-select {
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg-default);
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      cursor: pointer;
+      outline: none;
+      min-width: 160px;
+    }
+
+    .group-select:focus {
+      border-color: var(--accent-fg);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    /* Repository-style Group Box */
+    .repo-box {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      background-color: var(--bg-canvas);
+    }
+
+    .repo-box-header {
+      background-color: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-default);
+      padding: 1px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--fg-default);
+    }
+
+    .repo-box-header svg {
+      fill: var(--fg-muted);
+      flex-shrink: 0;
+    }
+
+    .app-row {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.1s ease;
+    }
+
+    .app-row:last-child {
+      border-bottom: none;
+    }
+
+    .app-row:hover {
+      background-color: var(--row-hover);
+    }
+
+    .app-row svg {
+      fill: var(--fg-muted);
+      flex-shrink: 0;
+    }
+
+    .app-link {
+      color: var(--accent-fg);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .app-link:hover {
+      text-decoration: underline;
+      font-weight: 700;
+      color: #0000FF;
+    }
+
+    .empty-state {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--fg-muted);
+      background-color: var(--bg-subtle);
+    }
+
+    @media (max-width: 600px) {
+      .gh-header {
+        padding: 12px 16px;
+      }
+      .container {
+        padding: 0 16px;
+        margin: 16px auto;
+      }
+      .toolbar {
+        flex-direction: column;
+      }
+      .group-select {
+        width: 100%;
+      }
+    }
+
+  .animate-charcter
+  {
+    background-image: linear-gradient(117deg, #ff47b5 16%, #3aef3c 100%, #5045ea);
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 2s ease infinite;
+    display: block;
+    font-size: 80px;
+    font-weight: 500;
+  }
+    
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes rotateGradient {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Target the gradient element directly */
+.gradient-svg #myGradient {
+    /* transform-box helps rotate around the center of the bounding box */
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: rotateGradient 4s linear infinite;
+  }
+
+  </style>
+</head>
+<body>
+  <header class="gh-header">
+    <div class="gh-brand">
+      <span class="animate-charcter">nToolz<span style="font-size: 30px;"> v3.0</span></span>
+    </div>
+    <button id="theme-toggle" class="theme-btn" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <main class="container">
+    <div class="toolbar">
+      <input type="text" id="search-input" class="search-input" placeholder="Find an app or group...">
+      <select id="group-filter" class="group-select" aria-label="Filter by group">
+        <option value="ALL">Group: All</option>
+      </select>
+    </div>
+
+    <div id="apps-container"></div>
+  </main>
+
+  <script>
+    const APPS_DATA = [
+      {
+        text: "MasterPassword",
+        url: "https://ntoolz.github.io/mpw",
+        description: "A web implementation of the Master Password App algorithm.",
+        group: "Security"
+      },
+      {
+        text: "Glycamic Index",
+        url: "https://ntoolz.github.io/gi",
+        description: "Searcahable index of Glycemic Index (GI) value of the food items",
+        group: "Medical"
+      },
+      {
+        text: "HTML to Markdown convertor",
+        url: "https://ntoolz.github.io/htm2md",
+        description: "When pested it converts html to markdown",
+        group: "Text"
+      },
+      {
+        text: "Text Log Reader",
+        url: "https://ntoolz.github.io/LogReader",
+        description: "Reads the text log and formats them into a table highlighitng `ERROR` & `WARN` lines",
+        group: "Tool"
+      },
+      {
+        text: "Mindmap",
+        url: "https://ntoolz.github.io/mindmap",
+        description: "Create mindmap to cahin your nurons",
+        group: "Design"
+      },
+      {
+        text: "Mermaid Js",
+        url: "https://ntoolz.github.io/mermaidjs",
+        description: "Render graphs usingmermaid syntax coding",
+        group: "Productivity"
+      },
+      {
+        text: "Sticky Notes",
+        url: "https://ntoolz.github.io/stickynote",
+        description: "Sticky notes to plan your day",
+        group: "Productivity"
+      },
+      {
+        text: "pomodoro",
+        url: "https://ntoolz.github.io/pomodoro",
+        description: "Decide on the task to be done by time",
+        group: "Productivity"
+      }
+    ];
+
+    const htmlEl = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const searchInput = document.getElementById('search-input');
+    const groupFilter = document.getElementById('group-filter');
+    const appsContainer = document.getElementById('apps-container');
+
+    // Theme switching
+    themeToggleBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      themeToggleBtn.textContent = next === 'dark' ? '🔆' : '🌙';
+    });
+
+    // Populate group dropdown
+    function initGroups() {
+      const groups = [...new Set(APPS_DATA.map(item => (item.group || 'General').trim()))];
+      groups.forEach(group => {
+        const option = document.createElement('option');
+        option.value = group;
+        option.textContent = `${group}`;
+        groupFilter.appendChild(option);
+      });
+    }
+
+    // Render filtered and grouped links
+    function renderApps() {
+      const query = searchInput.value.toLowerCase().trim();
+      const selectedGroup = groupFilter.value;
+
+      const filtered = APPS_DATA.filter(item => {
+        const title = (item.text || item.url || '').trim();
+        const group = (item.group || 'General').trim();
+        const matchesGroup = selectedGroup === 'ALL' || group === selectedGroup;
+        const matchesSearch =
+          title.toLowerCase().includes(query) ||
+          group.toLowerCase().includes(query);
+        return matchesGroup && matchesSearch;
+      });
+
+      appsContainer.innerHTML = '';
+
+      if (filtered.length === 0) {
+        appsContainer.innerHTML = '<div class="empty-state">No matching apps found.</div>';
+        return;
+      }
+
+      const grouped = filtered.reduce((acc, item) => {
+        const grp = (item.group || 'General').trim();
+        if (!acc[grp]) acc[grp] = [];
+        acc[grp].push(item);
+        return acc;
+      }, {});
+
+      Object.keys(grouped).forEach(groupName => {
+        const box = document.createElement('section');
+        box.className = 'repo-box';
+
+        const header = document.createElement('div');
+        header.className = 'repo-box-header';
+        header.innerHTML = `
+
+          <span>${escapeHTML(groupName)}</span>
+        `;
+        box.appendChild(header);
+
+        grouped[groupName].forEach(app => {
+          const row = document.createElement('div');
+          row.className = 'app-row';
+
+          const label = (app.text || app.url || '').trim();
+          const desc = (app.description || "").trim();
+          const href = (app.url || '#').trim();
+
+          row.innerHTML = `
+            <svg height="16" viewBox="0 0 16 16" width="16" aria-hidden="true" style="fill:#8080FF">
+              <path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path>
+            </svg>
+            <a class="app-link" href="${escapeHTML(href)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>
+            <div>${desc}</div>
+          `;
+          box.appendChild(row);
+        });
+
+        appsContainer.appendChild(box);
+      });
+    }
+
+    function escapeHTML(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    searchInput.addEventListener('input', renderApps);
+    groupFilter.addEventListener('change', renderApps);
+
+    initGroups();
+    renderApps();
+  </script>
+</body>
+</html>
